@@ -2,15 +2,7 @@
 Public Class Form1
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
-        'Try
-        '    Dim oleDbDataAdapter As OleDbDataAdapter = New OleDbDataAdapter(txtQuery.Text, "Provider=Microsoft.ACE.OLEDB.12.0;Data Source='" + Application.StartupPath + "\DBHesabPardaz.dat';Jet OLEDB:Database Password='D5oas$9X[21}U1)8'")
-        '    Dim dataSet As DataSet = New DataSet()
-        '    oleDbDataAdapter.Fill(dataSet)
-        '    MessageBox.Show("Completed")
-        'Catch expr_3C As Exception
-        '    Dim ex As Exception = expr_3C
-        '    MessageBox.Show(ex.Message)
-        'End Try
+
         Dim strCn As String = txtConnectionString.Text
 
         If IO.File.Exists(Application.StartupPath + "\cn.dll") Then
@@ -27,9 +19,6 @@ Public Class Form1
 
         For Each str As String In txtQuery.Text.Split(New String() {vbCr & vbLf & "GO" & vbCr & vbLf}, StringSplitOptions.RemoveEmptyEntries)
             Try
-                'If str.Contains("DROP VIEW viwKarsh") Then
-                '    Debug.WriteLine(str)
-                'End If
                 If str.Contains("@Year@") Then
                     Try
                         cmd.CommandText = str.Replace("@Year@", "_Year")
@@ -54,5 +43,10 @@ Public Class Form1
         If IO.File.Exists(Application.StartupPath + "\Query.txt") Then
             txtQuery.Text = IO.File.ReadAllText(Application.StartupPath + "\Query.txt")
         End If
+        If IO.File.Exists(Application.StartupPath + "\cn.dll") Then
+            txtConnectionString.Text = "read from file"
+        End If
     End Sub
+
+
 End Class
